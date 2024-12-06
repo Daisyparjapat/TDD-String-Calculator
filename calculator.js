@@ -75,7 +75,7 @@ class Calculator {
     if (numbers.some(isNaN)) {
       throw new Error("Invalid number in the expression");
     }
-    return numbers;
+    return numbers.filter(num => num <= 1000);
   }
 
   calculateFromString(operation, expression) {

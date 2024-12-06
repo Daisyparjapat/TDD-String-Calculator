@@ -22,11 +22,11 @@ describe('Calculator Tests', () => {
 
   // Test for two numbers
   test('should add two numbers correctly', () => {
-    expect(calculator.calculate("add", 5, 3)).toBe(8); 
+    expect(calculator.calculate("add", 5, 3)).toBe(8);
   });
 
   test('should subtract two numbers correctly', () => {
-    expect(calculator.calculate("subtract", 5, 3)).toBe(2); 
+    expect(calculator.calculate("subtract", 5, 3)).toBe(2);
   });
 
   test('should multiply two numbers correctly', () => {
@@ -37,27 +37,45 @@ describe('Calculator Tests', () => {
     expect(calculator.calculate("divide", 6, 3)).toBe(2);
   });
 
- // Test numbers with newlines and commas
- test('should calculate correctly with numbers separated by newlines or commas', () => {
-  expect(calculator.calculateFromString("add", "5, 3, 2")).toBe(10);  
-  expect(calculator.calculateFromString("subtract", "5\n3\n1")).toBe(1); 
-  expect(calculator.calculateFromString("multiply", "2,3\n2")).toBe(12); 
-  expect(calculator.calculateFromString("divide", "12\n2,3")).toBe(2);
-});
+  // Test numbers with newlines and commas
+  test('should calculate correctly with numbers separated by newlines or commas', () => {
+    expect(calculator.calculateFromString("add", "5, 3, 2")).toBe(10);
+    expect(calculator.calculateFromString("subtract", "5\n3\n1")).toBe(1);
+    expect(calculator.calculateFromString("multiply", "2,3\n2")).toBe(12);
+    expect(calculator.calculateFromString("divide", "12\n2,3")).toBe(2);
+  });
 
-test('should handle custom delimiter with semicolon', () => {
-  expect(calculator.calculateFromString("add", "//;\n1;2;3")).toBe(6);
-});
+  test('should handle custom delimiter with semicolon', () => {
+    expect(calculator.calculateFromString("add", "//;\n1;2;3")).toBe(6);
+  });
 
-test('should handle custom delimiter with asterisk', () => {
-  expect(calculator.calculateFromString("add", "//[***]\n1***2***3")).toBe(6);
-});
+  test('should handle custom delimiter with asterisk', () => {
+    expect(calculator.calculateFromString("add", "//[***]\n1***2***3")).toBe(6);
+  });
 
-test('should handle regular comma-separated input', () => {
-  expect(calculator.calculateFromString("add", "1,2,3")).toBe(6);
-});
+  test('should handle regular comma-separated input', () => {
+    expect(calculator.calculateFromString("add", "1,2,3")).toBe(6);
+  });
 
-test('should handle invalid number in the string', () => {
-  expect(() => calculator.calculateFromString("add", "//;\n1;2;x")).toThrow("Invalid number in the expression");
-});
+  test('should handle invalid number in the string', () => {
+    expect(() => calculator.calculateFromString("add", "//;\n1;2;x")).toThrow("Invalid number in the expression");
+  });
+
+  // Test for handling large numbers (ignoring numbers greater than 1000)
+  test('should ignore numbers greater than 1000 in addition', () => {
+    expect(calculator.calculateFromString("add", "500,1500,300")).toBe(800);
+  });
+
+  test('should ignore numbers greater than 1000 in subtraction', () => {
+    expect(calculator.calculateFromString("subtract", "1500, 1000, 500")).toBe(500);
+  });
+
+  test('should ignore numbers greater than 1000 in multiplication', () => {
+    expect(calculator.calculateFromString("multiply", "500, 1500, 2")).toBe(1000);
+  });
+
+  test('should ignore numbers greater than 1000 in division', () => {
+    expect(calculator.calculateFromString("divide", "1000, 1500, 2")).toBe(500);
+  });
+
 });
