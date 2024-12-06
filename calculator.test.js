@@ -39,9 +39,25 @@ describe('Calculator Tests', () => {
 
  // Test numbers with newlines and commas
  test('should calculate correctly with numbers separated by newlines or commas', () => {
-  expect(calculator.calculateFromString("add", "5, 3, 2")).toBe(10);  // 5 + 3 + 2 = 10
-  expect(calculator.calculateFromString("subtract", "5\n3\n1")).toBe(1);  // 5 - 3 - 1 = 1
-  expect(calculator.calculateFromString("multiply", "2,3\n2")).toBe(12);  // 2 * 3 * 2 = 12
-  expect(calculator.calculateFromString("divide", "12\n2,3")).toBe(2);  // 12 / 2 / 3 = 2
+  expect(calculator.calculateFromString("add", "5, 3, 2")).toBe(10);  
+  expect(calculator.calculateFromString("subtract", "5\n3\n1")).toBe(1); 
+  expect(calculator.calculateFromString("multiply", "2,3\n2")).toBe(12); 
+  expect(calculator.calculateFromString("divide", "12\n2,3")).toBe(2);
+});
+
+test('should handle custom delimiter with semicolon', () => {
+  expect(calculator.calculateFromString("add", "//;\n1;2;3")).toBe(6);
+});
+
+test('should handle custom delimiter with asterisk', () => {
+  expect(calculator.calculateFromString("add", "//[***]\n1***2***3")).toBe(6);
+});
+
+test('should handle regular comma-separated input', () => {
+  expect(calculator.calculateFromString("add", "1,2,3")).toBe(6);
+});
+
+test('should handle invalid number in the string', () => {
+  expect(() => calculator.calculateFromString("add", "//;\n1;2;x")).toThrow("Invalid number in the expression");
 });
 });

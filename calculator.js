@@ -60,9 +60,18 @@ class Calculator {
     }
     return expression;
   }
+
   parseNumbers(expression) {
-    if (expression.trim() === "") return [];
-    const numbers = expression.replace(/\n/g, ',').split(',').map(num => parseFloat(num.trim()));
+    let numbers = [];
+    if (expression.startsWith("//")) {
+      const delimiterIndex = expression.indexOf("\n");
+      const delimiterPart = expression.slice(2, delimiterIndex);
+      const customDelimiter = delimiterPart.startsWith("[") ? delimiterPart.slice(1, -1) : delimiterPart;
+      const numbersPart = expression.slice(delimiterIndex + 1);
+      numbers = numbersPart.split(customDelimiter).map(num => parseFloat(num.trim()));
+    } else {
+      numbers = expression.replace(/\n/g, ',').split(',').map(num => parseFloat(num.trim()));
+    }
     if (numbers.some(isNaN)) {
       throw new Error("Invalid number in the expression");
     }
