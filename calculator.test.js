@@ -78,4 +78,23 @@ describe('Calculator Tests', () => {
     expect(calculator.calculateFromString("divide", "1000, 1500, 2")).toBe(500);
   });
 
+  // Test for handling Nagitive Numbers
+
+  test('should handle negative numbers correctly in addition', () => {
+    expect(calculator.calculateFromString("add", "-5, 3")).toBe(-2); // -5 + 3 = -2
+  });
+  
+  test('should handle negative numbers correctly in subtraction', () => {
+    expect(calculator.calculateFromString("subtract", "5, -3")).toBe(8); // 5 - (-3) = 5 + 3 = 8
+  });
+  
+  test('should handle negative numbers correctly in multiplication', () => {
+    expect(calculator.calculateFromString("multiply", "-5, 3")).toBe(-15); // -5 * 3 = -15
+  });
+  
+  test('should handle negative numbers correctly in division', () => {
+    expect(calculator.calculateFromString("divide", "-6, 3")).toBe(-2); // -6 / 3 = -2
+  });
+  
+
 });
