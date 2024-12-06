@@ -34,6 +34,24 @@ class Calculator {
           throw new Error(`Unknown operation: ${operation}`);
       }
     }
+    if (args.length === 2) {
+      const [a, b] = args;
+      switch (operation) {
+        case 'add':
+          return a + b;
+        case 'subtract':
+          return a - b;
+        case 'multiply':
+          return a * b;
+        case 'divide':
+          if (b === 0) {
+            throw new Error("Cannot divide by zero");
+          }
+          return a / b;
+        default:
+          throw new Error(`Unknown operation: ${operation}`);
+      }
+    }
   }
   
   handleEmptyString(expression) {
