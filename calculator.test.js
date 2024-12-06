@@ -81,20 +81,38 @@ describe('Calculator Tests', () => {
   // Test for handling Nagitive Numbers
 
   test('should handle negative numbers correctly in addition', () => {
-    expect(calculator.calculateFromString("add", "-5, 3")).toBe(-2); // -5 + 3 = -2
+    expect(calculator.calculateFromString("add", "-5, 3")).toBe(-2);
   });
-  
+
   test('should handle negative numbers correctly in subtraction', () => {
-    expect(calculator.calculateFromString("subtract", "5, -3")).toBe(8); // 5 - (-3) = 5 + 3 = 8
+    expect(calculator.calculateFromString("subtract", "5, -3")).toBe(8);
   });
-  
+
   test('should handle negative numbers correctly in multiplication', () => {
-    expect(calculator.calculateFromString("multiply", "-5, 3")).toBe(-15); // -5 * 3 = -15
+    expect(calculator.calculateFromString("multiply", "-5, 3")).toBe(-15);
   });
-  
+
   test('should handle negative numbers correctly in division', () => {
-    expect(calculator.calculateFromString("divide", "-6, 3")).toBe(-2); // -6 / 3 = -2
+    expect(calculator.calculateFromString("divide", "-6, 3")).toBe(-2);
   });
-  
+
+  //Test for handling Multiple Custom Delimiters
+
+  test('should handle multiple delimiters [;][*]', () => {
+    expect(calculator.calculateFromString("add", "//[;][*]\n1;2*3")).toBe(6);
+  });
+
+  test('should handle multiple delimiters with different lengths [;][***][*]', () => {
+    expect(calculator.calculateFromString("add", "//[;][***][*]\n1;2***3*4")).toBe(10);
+  });
+
+  test('should handle custom delimiter with semicolon and asterisk', () => {
+    expect(calculator.calculateFromString("add", "//[;][*]\n5;3*2")).toBe(10);
+  });
+
+  test('should handle invalid number with multiple delimiters', () => {
+    expect(() => calculator.calculateFromString("add", "//[;][*]\n5;3*x")).toThrow("Invalid number in the expression");
+  });
+
 
 });

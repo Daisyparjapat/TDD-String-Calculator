@@ -66,9 +66,20 @@ class Calculator {
     if (expression.startsWith("//")) {
       const delimiterIndex = expression.indexOf("\n");
       const delimiterPart = expression.slice(2, delimiterIndex);
-      const customDelimiter = delimiterPart.startsWith("[") ? delimiterPart.slice(1, -1) : delimiterPart;
+      const delimiters = [];
+      if (delimiterPart.startsWith("[")) {
+        const regex = /\[([^\]]+)\]/g;
+        let match;
+        while ((match = regex.exec(delimiterPart)) !== null) {
+          delimiters.push(match[1]);
+        }
+      } else {
+        delimiters.push(delimiterPart);
+      }
+
+      const regex = new RegExp(delimiters.join("|"), "g");
       const numbersPart = expression.slice(delimiterIndex + 1);
-      numbers = numbersPart.split(customDelimiter).map(num => parseFloat(num.trim()));
+      numbers = numbersPart.split(regex).map(num => parseFloat(num.trim()));
     } else {
       numbers = expression.replace(/\n/g, ',').split(',').map(num => parseFloat(num.trim()));
     }
@@ -77,7 +88,6 @@ class Calculator {
     }
     return numbers.filter(num => num <= 1000);
   }
-
   calculateFromString(operation, expression) {
     const numbers = this.parseNumbers(expression);
     if (numbers.length === 1) {
