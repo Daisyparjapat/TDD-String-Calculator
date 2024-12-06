@@ -71,13 +71,13 @@ class Calculator {
         const regex = /\[([^\]]+)\]/g;
         let match;
         while ((match = regex.exec(delimiterPart)) !== null) {
-          delimiters.push(match[1]);
+          delimiters.push(match[1]); 
         }
       } else {
-        delimiters.push(delimiterPart);
+        delimiters.push(delimiterPart); 
       }
-
       const regex = new RegExp(delimiters.join("|"), "g");
+
       const numbersPart = expression.slice(delimiterIndex + 1);
       numbers = numbersPart.split(regex).map(num => parseFloat(num.trim()));
     } else {
@@ -88,6 +88,7 @@ class Calculator {
     }
     return numbers.filter(num => num <= 1000);
   }
+
   calculateFromString(operation, expression) {
     const numbers = this.parseNumbers(expression);
     if (numbers.length === 1) {

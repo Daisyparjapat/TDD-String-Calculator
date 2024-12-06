@@ -114,5 +114,23 @@ describe('Calculator Tests', () => {
     expect(() => calculator.calculateFromString("add", "//[;][*]\n5;3*x")).toThrow("Invalid number in the expression");
   });
 
+  // Test for handling Custom Delimiters with Length Greater Than 1
+
+  test('should handle custom multi-character delimiter [***]', () => {
+    expect(calculator.calculateFromString("add", "//[***]\n1***2***3")).toBe(6); 
+  });
+
+  test('should handle multiple custom delimiters [***] and [;;;]', () => {
+    expect(calculator.calculateFromString("add", "//[***][;;;]\n1***2;;;3")).toBe(6); 
+  });
+
+  test('should handle multiple custom delimiters with different lengths', () => {
+    expect(calculator.calculateFromString("add", "//[***][;;;][@]\n1***2;;;3@4")).toBe(10); 
+  });
+
+  test('should throw error for invalid number in custom delimiter input', () => {
+    expect(() => calculator.calculateFromString("add", "//[***]\n1***2***3x")).toThrow("Invalid number in the expression");
+  });
+
 
 });
