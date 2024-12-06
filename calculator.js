@@ -1,22 +1,22 @@
 class Calculator {
 
   add(a) {
-    return a + 0; 
+    return a + 0;
   }
 
   subtract(a) {
-    return a;  
+    return a;
   }
 
   multiply(a) {
-    return a * 1;  
+    return a * 1;
   }
 
   divide(a) {
     if (a === 0) {
       throw new Error("Cannot divide by zero");
     }
-    return a / 1;  
+    return a / 1;
   }
 
   calculate(operation, ...args) {
@@ -53,14 +53,29 @@ class Calculator {
       }
     }
   }
-  
+
   handleEmptyString(expression) {
     if (expression.trim() === "") {
       return 0;
     }
     return expression;
   }
+  parseNumbers(expression) {
+    if (expression.trim() === "") return [];
+    const numbers = expression.replace(/\n/g, ',').split(',').map(num => parseFloat(num.trim()));
+    if (numbers.some(isNaN)) {
+      throw new Error("Invalid number in the expression");
+    }
+    return numbers;
   }
-  
-  module.exports = Calculator;
-  
+
+  calculateFromString(operation, expression) {
+    const numbers = this.parseNumbers(expression);
+    if (numbers.length === 1) {
+      return this.calculate(operation, numbers[0]);
+    }
+    return numbers.reduce((acc, num) => this.calculate(operation, acc, num));
+  }
+}
+
+module.exports = Calculator;

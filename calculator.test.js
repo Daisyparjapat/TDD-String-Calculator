@@ -37,5 +37,11 @@ describe('Calculator Tests', () => {
     expect(calculator.calculate("divide", 6, 3)).toBe(2);
   });
 
-
+ // Test numbers with newlines and commas
+ test('should calculate correctly with numbers separated by newlines or commas', () => {
+  expect(calculator.calculateFromString("add", "5, 3, 2")).toBe(10);  // 5 + 3 + 2 = 10
+  expect(calculator.calculateFromString("subtract", "5\n3\n1")).toBe(1);  // 5 - 3 - 1 = 1
+  expect(calculator.calculateFromString("multiply", "2,3\n2")).toBe(12);  // 2 * 3 * 2 = 12
+  expect(calculator.calculateFromString("divide", "12\n2,3")).toBe(2);  // 12 / 2 / 3 = 2
+});
 });
